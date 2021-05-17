@@ -3,6 +3,7 @@ package boardgame;
 import java.util.ArrayList;
 import java.util.List;
 
+import boardgame.model.KnightDirection;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -14,7 +15,6 @@ import javafx.scene.shape.Circle;
 import org.tinylog.Logger;
 
 import boardgame.model.BoardGameModel;
-import boardgame.model.PawnDirection;
 import boardgame.model.Position;
 
 public class BoardGameController {
@@ -75,7 +75,7 @@ public class BoardGameController {
     }
 
     private Circle createPiece(Color color) {
-        var piece = new Circle(50);
+        var piece = new Circle(30);
         piece.setFill(color);
         return piece;
     }
@@ -101,7 +101,7 @@ public class BoardGameController {
             case SELECT_TO -> {
                 if (selectablePositions.contains(position)) {
                     var pieceNumber = model.getPieceNumber(selected).getAsInt();
-                    var direction = PawnDirection.of(position.row() - selected.row(), position.col() - selected.col());
+                    var direction = KnightDirection.of(position.row() - selected.row(), position.col() - selected.col());
                     Logger.debug("Moving piece {} {}", pieceNumber, direction);
                     model.move(pieceNumber, direction);
                     deselectSelectedPosition();

@@ -6,15 +6,13 @@ import java.util.*;
 
 public class BoardGameModel {
 
-    public static int BOARD_SIZE = 5;
+    public static int BOARD_SIZE = 8;
 
     private final Piece[] pieces;
 
     public BoardGameModel() {
-        this(new Piece(PieceType.BLUE, new Position(0, 0)),
-                new Piece(PieceType.GREEN, new Position(0, BOARD_SIZE - 1)),
-                new Piece(PieceType.RED, new Position(BOARD_SIZE - 1, 0)),
-                new Piece(PieceType.YELLOW, new Position(BOARD_SIZE - 1, BOARD_SIZE - 1)));
+        this(new Piece(PieceType.BLACK, new Position(0, 0)),
+                new Piece(PieceType.WHITE, new Position(BOARD_SIZE - 1, BOARD_SIZE - 1)));
     }
 
     public BoardGameModel(Piece... pieces) {
@@ -48,7 +46,7 @@ public class BoardGameModel {
         return pieces[pieceNumber].positionProperty();
     }
 
-    public boolean isValidMove(int pieceNumber, PawnDirection direction) {
+    public boolean isValidMove(int pieceNumber, KnightDirection direction) {
         if (pieceNumber < 0 || pieceNumber >= pieces.length) {
             throw new IllegalArgumentException();
         }
@@ -64,9 +62,9 @@ public class BoardGameModel {
         return true;
     }
 
-    public Set<PawnDirection> getValidMoves(int pieceNumber) {
-        EnumSet<PawnDirection> validMoves = EnumSet.noneOf(PawnDirection.class);
-        for (var direction : PawnDirection.values()) {
+    public Set<KnightDirection> getValidMoves(int pieceNumber) {
+        EnumSet<KnightDirection> validMoves = EnumSet.noneOf(KnightDirection.class);
+        for (var direction : KnightDirection.values()) {
             if (isValidMove(pieceNumber, direction)) {
                 validMoves.add(direction);
             }
@@ -74,7 +72,7 @@ public class BoardGameModel {
         return validMoves;
     }
 
-    public void move(int pieceNumber, PawnDirection direction) {
+    public void move(int pieceNumber, KnightDirection direction) {
         pieces[pieceNumber].moveTo(direction);
     }
 
